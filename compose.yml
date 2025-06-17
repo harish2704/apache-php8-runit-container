@@ -1,0 +1,18 @@
+services:
+  os:
+    image: 'runit-apache-sshd-debian'
+    build: 
+      context: ./build
+    tty: true
+    volumes:
+      - ./srvroot:/var/www/html
+      - ./authorized_keys:/root/.ssh/authorized_keys
+    # entrypoint: ["/bin/bash", "-c", "trap \"echo Shutting down; exit 0\" SIGTERM SIGINT SIGKILL; /bin/sleep infinity & wait"]
+    entrypoint: ["/sbin/init", "0"]
+    ports:
+      - "2022:22"
+      - "2080:80"
+      - "2443:443"
+    environment:
+      - container=podman
+
