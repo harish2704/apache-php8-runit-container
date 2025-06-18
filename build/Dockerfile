@@ -5,7 +5,7 @@ RUN apt-get update ;\
   runit-init \
   procps \
   dropbear \
-  vim-tiny \
+  nano \
   apache2 \
   composer \
   php8.2-amqp \
@@ -59,11 +59,14 @@ RUN apt-get update ;\
   php8.2-xsl \
   php8.2-zip \
   php8.2-xdebug; \
-  rm -rf  /etc/sv/* ;\
   apt-get clean
 
-RUN find /etc/init.d/ -type f  | grep -v 'apache\|dropbear\|rc' | xargs rm ;\
+RUN   rm -rf  /etc/sv/* ;\
+  find /etc/init.d/ -type f  | grep -v 'apache\|dropbear\|rc' | xargs rm ;\
   find /etc/ -xtype l | xargs rm
+
+RUN curl -o- https://fnm.vercel.app/install | bash; \
+  bash -c 'source /root/.bashrc; fnm install 22'
 
 EXPOSE 22 80 443
 
