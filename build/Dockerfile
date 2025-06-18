@@ -7,6 +7,7 @@ RUN apt-get update ;\
   dropbear \
   vim-tiny \
   apache2 \
+  composer \
   php8.2-amqp \
   php8.2-apcu \
   php8.2-ast \
@@ -22,7 +23,6 @@ RUN apt-get update ;\
   php8.2-pcov \
   php8.2-http \
   php8.2-ps \
-  php8.2-psr \
   php8.2-raphf \
   php8.2-redis \
   php8.2-uploadprogress \
@@ -61,6 +61,9 @@ RUN apt-get update ;\
   php8.2-xdebug; \
   rm -rf  /etc/sv/* ;\
   apt-get clean
+
+RUN find /etc/init.d/ -type f  | grep -v 'apache\|dropbear\|rc' | xargs rm ;\
+  find /etc/ -xtype l | xargs rm
 
 EXPOSE 22 80 443
 
